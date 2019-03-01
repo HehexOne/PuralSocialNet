@@ -191,7 +191,6 @@ def user_page(identificator):
     return render_template("user_page.html", user=user)
 
 
-
 @app.route("/logout")
 def logout():
     if session.get("username", None) is not None:
