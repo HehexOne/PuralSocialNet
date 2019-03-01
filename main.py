@@ -192,10 +192,15 @@ def user_page(identificator):
     return render_template("user_page.html", user=user)
 
 
-@app.route("/404")
+@app.route("/error")
 @app.errorhandler(404)
 def error_404(e):
     return render_template("404.html"), 404
+
+
+@app.route("/error")
+def err():
+    return error_404("a")
 
 
 @app.route("/logout")
