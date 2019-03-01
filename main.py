@@ -186,8 +186,16 @@ def user_page(identificator):
         return redirect("/login")
     user = User.query.filter_by(
         id=identificator).first()
+    if user is None:
+        return redirect("/404")
     user.date = ".".join(reversed(str(user.date).split("-")))
     return render_template("user_page.html", user=user)
+
+
+@app.route("/404")
+@app.errorhandler(404)
+def error():
+    return render_template("404.html")
 
 
 @app.route("/logout")
