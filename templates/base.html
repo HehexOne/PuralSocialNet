@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
     <title>PuralNet</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/design.css">
-    <script src="../static/js/index.js"></script>
+    {% block head %}
+    {% endblock %}
 </head>
 <body>
 
@@ -16,10 +18,11 @@
 
 
 <div id="side-panel">
-    <a href="/index"><img src="../static/img/logo.png" style="width: 100px"></a>
+    <img src="../static/img/logo.png" style="width: 100px">
     {% if not session.get("username", None) %}
         <a href="/login"><img src="../static/img/login.png" style="width: 50px; position: fixed; bottom: 30px; left: 25px"></a>
     {% else %}
+        <a href="/index"><img src="../static/img/profile.png" style="width: 50px; position: fixed; left: 25px; top: 125px;"></a>
         <a href="/logout"><img src="../static/img/exit.png" style="width: 50px; position: fixed; bottom: 30px; left: 25px"></a>
     {% endif %}
 </div>

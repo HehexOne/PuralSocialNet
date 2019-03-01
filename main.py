@@ -108,7 +108,10 @@ class Relations(db.Model):
 @app.route("/index", methods=['POST', 'GET'])
 def index():
     if session.get("username", None) is not None:
-        return render_template("base.html")
+        user = User.query.filter_by(
+            username=session['username']).first()
+        user.date = ".".join(reversed(str(user.date).split("-")))
+        return render_template("user_page.html", user=user)
     return redirect("/login")
 
 
@@ -185,4 +188,4 @@ def logout():
 
 if __name__ == "__main__":
     db.create_all()
-    app.run()
+    app.run(host="0.0.0.0", port=1024)
