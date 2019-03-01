@@ -186,7 +186,6 @@ def user_page(identificator):
         return redirect("/login")
     user = User.query.filter_by(
         id=identificator).first()
-    print(user.avatar_path)
     user.date = ".".join(reversed(str(user.date).split("-")))
     return render_template("user_page.html", user=user)
 
