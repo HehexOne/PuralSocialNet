@@ -6,7 +6,6 @@ from wtforms import StringField, PasswordField, DateField, SubmitField, \
 import hashlib
 from dateutil import parser
 from wtforms.validators import DataRequired, Length
-from werkzeug.security import generate_password_hash
 from libgravatar import Gravatar
 
 app = Flask(__name__)
@@ -89,6 +88,7 @@ class Message(db.Model):
     date_time = db.Column(db.DateTime(timezone=True), unique=False,
                           nullable=False)
     is_with_files = db.Column(db.Boolean, nullable=False)
+    is_read = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return '<Message {} {} {} {}>'.format(
@@ -108,10 +108,7 @@ class Relations(db.Model):
 @app.route("/index", methods=['POST', 'GET'])
 def index():
     if session.get("username", None) is not None:
-        user = User.query.filter_by(
-            username=session['username']).first()
-        user.date = ".".join(reversed(str(user.date).split("-")))
-        return render_template("user_page.html", user=user)
+        return redirect(f"/user/{session.get('id')}")
     return redirect("/login")
 
 
@@ -129,6 +126,7 @@ def login():
             user = User.query.filter_by(
                 username=request.form['username']).first()
             if user and user.password_hash == m.hexdigest():
+                session['id'] = user.id
                 session['username'] = user.username
                 session['api_key'] = user.api_key
                 session['is_admin'] = user.is_admin
@@ -168,15 +166,30 @@ def register():
                                     api_key=m1.hexdigest())
                     db.session.add(new_user)
                     db.session.commit()
-                    session['username'] = new_user.username
-                    session['api_key'] = new_user.api_key
-                    session['is_admin'] = new_user.is_admin
+                    user = User.query.filter_by(
+                        username=new_user.username).first()
+                    session['id'] = user.id
+                    session['username'] = user.username
+                    session['api_key'] = user.api_key
+                    session['is_admin'] = user.is_admin
                     return redirect("/index")
                 except Exception as e:
                     print(e)
                     form.username.errors.append(
                         "Ошибка при создании профиля!")
     return render_template("register.html", session=session, form=form)
+
+
+@app.route("/user/<int:identificator>")
+def user_page(identificator):
+    if session.get("username", None) is None:
+        return redirect("/login")
+    user = User.query.filter_by(
+        id=identificator).first()
+    print(user.avatar_path)
+    user.date = ".".join(reversed(str(user.date).split("-")))
+    return render_template("user_page.html", user=user)
+
 
 
 @app.route("/logout")
@@ -188,4 +201,4 @@ def logout():
 
 if __name__ == "__main__":
     db.create_all()
-    app.run(host="0.0.0.0", port=1024)
+    app.run()
