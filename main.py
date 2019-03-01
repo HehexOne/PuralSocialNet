@@ -11,7 +11,7 @@ from libgravatar import Gravatar
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = url = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = str(hash("sup3rs3cre1p@ssvv0rd"))
+app.config['SECRET_KEY'] = "sup3rs3cre1p@ssvv0rd"
 db = SQLAlchemy(app)
 
 
@@ -201,4 +201,4 @@ def logout():
 
 if __name__ == "__main__":
     db.create_all()
-    app.run()
+    app.run(host="0.0.0.0", port=80)
