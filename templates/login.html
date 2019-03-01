@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style type="text/css">
+    body {
+        background-image: url(../static/img/back.jpg);
+    }
+
+    #form {
+        margin: 15% 15% 15% 15%;
+        width: fit-content;
+        height: fit-content;
+        text-align: center;
+        background-color: white;
+        padding: 100px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    }
+</style>
+<div id="form">
+    <h1>Авторизация<br/>PuralNet</h1><br/>
+    <form action="" method="post" name="LoginForm" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username }}<br>
+            {% for error in form.username.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password }}<br>
+            {% for error in form.password.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <br/>
+    <a href="/register">Регистрация</a>
+</div>
+{% endblock %}
