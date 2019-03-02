@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="../static/css/profile.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -12,18 +12,27 @@
             <img class="img-thumbnail" id="avatar" src="{{ user.avatar_path }}">
             <br/>
             <div id="userinfo">
-            <h1>{{ user.name.title() }} {{ user.surname.title() }}</h1>
+                <h1>{{ user.name.title() }} {{ user.surname.title() }}</h1>
                 <h5 style="color: gray">{{ user.about_me }}</h5>
-            <p>День рождения: {{ user.date }}</p>
+                <p>День рождения: {{ user.date }}</p>
 
             </div>
             <br/>
             {% if session.get("username") != user.username %}
-            <button class="btn btn-success">Добавить в друзья</button>
+            <form method="post" action="/addfriend/id{{ user.id }}">
+                <input type="hidden" name="api_key" value="{{ session.get('api_key') }}">
+                <button class="btn btn-success">Добавить в друзья</button>
+            </form>
             {% else %}
-            <button class="btn btn-secondary">Настройки</button>
+            <form method="get" action="/user/id{{ session.get('id') }}/settings">
+                <button class="btn btn-secondary">Настройки</button>
+            </form>
             {% endif %}
-            <button class="btn btn-primary">Сообщение</button>
+            <br/>
+            <form method="post" action="/chat/id{{ user.id }}">
+                <input type="hidden" name="api_key" value="{{ session.get('api_key') }}">
+                <button class="btn btn-primary">Сообщение</button>
+            </form>
         </div>
     </div>
     <div>

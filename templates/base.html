@@ -2,11 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="../static/img/icon.png" type="image/png">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/icon.png') }}" type="image/png">
     <meta http-equiv="Cache-Control" content="no-cache">
     <title>PuralNet</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/design.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design.css') }}">
     {% block head %}
     {% endblock %}
 </head>
@@ -19,12 +19,12 @@
 
 
 <div id="side-panel">
-    <img src="../static/img/icon.png" style="width: 75px; margin: 12px;">
+    <img src="{{ url_for('static', filename='img/icon.png') }}" style="width: 75px; margin: 12px;">
     {% if not session.get("username", None) %}
-        <a href="/login"><img src="../static/img/login.png" style="width: 50px; position: fixed; bottom: 30px; left: 25px"></a>
+        <a href="/login"><img src="{{ url_for('static', filename='img/login.png') }}" style="width: 50px; position: fixed; bottom: 30px; left: 25px"></a>
     {% else %}
-        <a href="/index"><img src="../static/img/profile.png" style="width: 50px; position: fixed; left: 25px; top: 125px;"></a>
-        <a href="/logout"><img src="../static/img/exit.png" style="width: 50px; position: fixed; bottom: 30px; left: 25px"></a>
+        <a href="/user/id{{ session.get('id') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" style="width: 50px; position: fixed; left: 25px; top: 125px;"></a>
+        <a href="/logout"><img src="{{ url_for('static', filename='img/exit.png') }}" style="width: 50px; position: fixed; bottom: 30px; left: 25px"></a>
     {% endif %}
 </div>
 

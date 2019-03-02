@@ -108,7 +108,7 @@ class Relations(db.Model):
 @app.route("/index", methods=['POST', 'GET'])
 def index():
     if session.get("username", None) is not None:
-        return redirect(f"/user/{session.get('id')}")
+        return redirect(f"/user/id{session.get('id')}")
     return redirect("/login")
 
 
@@ -180,7 +180,7 @@ def register():
     return render_template("register.html", session=session, form=form)
 
 
-@app.route("/user/<int:identificator>")
+@app.route("/user/id<int:identificator>")
 def user_page(identificator):
     if session.get("username", None) is None:
         return redirect("/login")
