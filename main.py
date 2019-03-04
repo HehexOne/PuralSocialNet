@@ -244,7 +244,7 @@ def get_friends(identificator, page):
             query = request.form["query"]
     user = User.query.filter_by(
         id=identificator).first()
-    message = "Друзья"
+    message = "Подписки пользователя"
     who = f"{user.name} {user.surname}".title()
     qty = (len(user.Friends) // 20) * page
     if query is not None:

@@ -17,20 +17,20 @@
                 <h6>ID: id{{ user.id }}</h6>
                 <h6>День рождения: {{ user.date }}</h6>
                 <br/>
-                <h4>Друзья: <a href="id{{ user.id }}/friends">{{ qty }}</a></h4>
+                <h4>Подписки: <a href="id{{ user.id }}/friends">{{ qty }}</a></h4>
                 <br/>
             </div>
             <br/>
             {% if session.get("username") != user.username and not is_friends %}
             <form method="post" action="/addfriend/id{{ user.id }}" name="add_friend_form">
                 <input type="hidden" name="api_key" value="{{ session.get('api_key') }}">
-                <button class="btn btn-success">Добавить в друзья</button>
+                <button class="btn btn-success">Подписаться</button>
             </form>
             <br/>
             {% elif session.get("username") != user.username and is_friends %}
             <form method="post" action="/rmfriend/id{{ user.id }}" name="delete_friend_form">
                 <input type="hidden" name="api_key" value="{{ session.get('api_key') }}">
-                <button class="btn btn-danger">Удалить из друзей</button>
+                <button class="btn btn-danger">Отписаться</button>
             </form>
             <br/>
             {% endif %}
