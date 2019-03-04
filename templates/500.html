@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    #header_image {
+        position: absolute;
+        background-color: #518bff;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 400px;
+    }
+
+    #error_code {
+        align-content: center;
+        text-align: center;
+        position: absolute;
+        margin: 0px auto 50px;
+        right: 0;
+        left: 0;
+        color: white;
+        font-size: 404px;
+    }
+
+    #error_text {
+        align-content: center;
+        text-align: center;
+        position: absolute;
+        margin: 450px auto 50px;
+        right: 0;
+        left: 0;
+    }
+</style>
+<div id="header_image"></div>
+<h1 id="error_code">500</h1>
+<h1 id="error_text">Ошибка сервера. Мы уже работаем над этим.</h1>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    #friends_block {
+        align-content: center;
+        text-align: center;
+        left: 0;
+        right: 0;
+        width: 700px;
+        position: absolute;
+        margin: 100px auto 100px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+        padding: 50px;
+    }
+
+    #back {
+        height: 300px;
+        width: 100%;
+        background-color: #518bff;
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+</style>
+<div id="back">
+<div id="friends_block">
+    <h3>{{ message }}</h3>
+    <h3>{{ who }}</h3>
+    <h5>Страница: {{ current_page }}</h5>
+    <br/>
+    <form action="" method="post" name="SearchForm" novalidate>
+        <input aria-label="Поиск" type="text" name="query">
+        <button class="btn btn-primary">Поиск</button>
+    </form>
+    <br/><br/>
+    {% for friend in friends %}
+    <div>
+        <a href="{{url_for('user_page', identificator=friend.id)}}">
+            <img style="width: 100px" class="img-thumbnail" id="avatar"
+                 src="{{ friend.avatar_path }}">
+            <h3>{{ friend.name }} {{ friend.surname }}</h3>
+        </a>
+    </div>
+    <br/><br/>
+    {% endfor %}
+    {% for page in pages %}
+    {% if page != current_page %}
+    <a href="{{url_for('get_friends', identificator=friend.id, page=page+1)}}">{{
+        page + 1 }}</a>
+    {% else %}
+    <p>{{ page + 1 }}</p>
+    {% endif %}
+    {% endfor %}
+</div>
+</div>
+{% endblock %}
