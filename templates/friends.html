@@ -47,14 +47,6 @@
     </div>
     <br/><br/>
     {% endfor %}
-    {% for page in pages %}
-    {% if page != current_page %}
-    <a href="{{url_for('get_friends', identificator=friend.id, page=page+1)}}">{{
-        page + 1 }}</a>
-    {% else %}
-    <p>{{ page + 1 }}</p>
-    {% endif %}
-    {% endfor %}
 </div>
 </div>
 {% endblock %}

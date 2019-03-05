@@ -246,19 +246,17 @@ def get_friends(identificator, page):
         id=identificator).first()
     message = "Подписки пользователя"
     who = f"{user.name} {user.surname}".title()
-    qty = (len(user.Friends) // 20) * page
     if query is not None:
         friends = list(filter(lambda
                                   x: query.lower() in x.name.lower()
                                      or query.lower() in x.surname.lower(),
-                              User.query.all()))[qty:qty + 20]
+                              User.query.all()))
         message = "Пользователи"
         who = ""
     else:
-        friends = user.Friends[qty:qty + 20]
-    return render_template("friends.html", ident=identificator, friends=friends,
-                           pages=range(len(user.Friends) // 20),
-                           current_page=page, message=message,
+        friends = user.Friends
+    return render_template("friends.html", ident=identificator,
+                           friends=friends, message=message,
                            who=who)
 
 
