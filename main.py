@@ -211,7 +211,7 @@ def index():
                         for
                         art
                         in
-                        articles]
+                        articles if art]
     except Exception as e:
         print(e)
         articles = []
