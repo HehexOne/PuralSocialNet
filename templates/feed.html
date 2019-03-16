@@ -38,7 +38,7 @@
                                            src="{{ article[1].avatar_path }}"
                                            style="width: 100px;"
                                            alt="Аватар пользователя">
-                <h2>{{ article[1].name.title() }} {{ article[1].surname.title() }}</h2>
+                <a href="/user/id{{ art.user_id }}"><h2>{{ article[1].name.title() }} {{ article[1].surname.title() }}</h2></a>
                 <p>ID: {{ art.user_id }}</p>
                 <h3>{{ art.title }}</h3>
                 <h6>{{ art.timestamp }}</h6>
