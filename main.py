@@ -218,6 +218,11 @@ def index():
     return render_template("feed.html", articles=articles)
 
 
+@app.route("/info")
+def info():
+    return render_template("info.html")
+
+
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if session.get("username", None) is not None:

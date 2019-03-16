@@ -20,6 +20,7 @@
 
 <div id="side-panel">
     <a href="/feed"><img src="{{ url_for('static', filename='img/icon.png') }}" style="width: 75px; margin: 12px;"></a>
+    <a href="/info"><img src="{{ url_for('static', filename='img/information.png') }}" style="width: 40px; position: fixed; bottom: 115px; left: 30px"></a>
     {% if not session.get("username", None) %}
         <a href="/login"><img src="{{ url_for('static', filename='img/login.png') }}" style="width: 50px; position: fixed; bottom: 30px; left: 25px"></a>
     {% else %}

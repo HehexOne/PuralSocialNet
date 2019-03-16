@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    #info_block {
+        align-content: center;
+        text-align: center;
+        left: 0;
+        right: 0;
+        width: 700px;
+        position: absolute;
+        margin: 100px auto 100px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+        padding: 50px;
+    }
+
+    #back {
+        height: 300px;
+        width: 100%;
+        background-color: #518bff;
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+</style>
+<div id="back">
+    <div id="info_block">
+        <h1>PuralNet</h1>
+        <br/>
+        <h4>"Не сказал бы, что это революция в мире социальных сетей."<br/><br/>Автор
+        </h4>
+        <br/><br/><br/><br/>
+        <img width="200" alt="GitHub Logotype" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png">
+        <br/><br/><br/>
+        <h5>Ссылка на GitHub репозиторий проекта</h5>
+        <a href="https://github.com/HehexOne/PuralSocialNet">ТЫК!</a>
+        <br/><br/>
+        <h5>Ссылка на проект авторегистрации от друзей (Ссылка на Github)</h5>
+        <a href="https://github.com/gamesbysl1m/puralnet_autoreg">ТЫК!</a>
+    </div>
+</div>
+
+{% endblock %}
