@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/profile.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -15,40 +16,106 @@
                 <h1>{{ user.name.title() }} {{ user.surname.title() }}</h1>
                 <h5 style="color: gray">{{ user.about_me }}</h5>
                 <h6>ID: id{{ user.id }}</h6>
-                <h6>День рождения: {{ user.date }}</h6>
+                <h6>День рождения: {{ date }}</h6>
                 <br/>
-                <h4>Подписки: <a href="id{{ user.id }}/friends">{{ qty }}</a></h4>
+                <h4>Подписки: <a href="id{{ user.id }}/subscribes">{{ qty }}</a>
+                </h4>
+                <h4>Подписчики: <a href="id{{ user.id }}/subscribers">{{ qty_sb
+                    }}</a></h4>
                 <br/>
             </div>
             <br/>
             {% if session.get("username") != user.username and not is_friends %}
-            <form method="post" action="/addfriend/id{{ user.id }}" name="add_friend_form">
-                <input type="hidden" name="api_key" value="{{ session.get('api_key') }}">
+            <form method="post" action="/addfriend/id{{ user.id }}"
+                  name="add_friend_form">
+                <input type="hidden" name="api_key"
+                       value="{{ session.get('api_key') }}">
                 <button class="btn btn-success">Подписаться</button>
             </form>
             <br/>
             {% elif session.get("username") != user.username and is_friends %}
-            <form method="post" action="/rmfriend/id{{ user.id }}" name="delete_friend_form">
-                <input type="hidden" name="api_key" value="{{ session.get('api_key') }}">
+            <form method="post" action="/rmfriend/id{{ user.id }}"
+                  name="delete_friend_form">
+                <input type="hidden" name="api_key"
+                       value="{{ session.get('api_key') }}">
                 <button class="btn btn-danger">Отписаться</button>
             </form>
             <br/>
             {% endif %}
-            {% if session.get("username") == user.username or session.get('is_admin') %}
-            <form method="get" action="/id{{ session.get('id') }}/settings">
+            {% if session.get("username") == user.username or
+            session.get('is_admin') %}
+            <form method="get" action="/user/id{{ user.id }}/settings">
                 <button class="btn btn-secondary">Настройки</button>
             </form>
             <br/>
             {% endif %}
-            <form method="post" action="/chat/id{{ user.id }}">
-                <input type="hidden" name="api_key" value="{{ session.get('api_key') }}">
+            <form method="get" action="/chat/id{{ user.id }}">
                 <button class="btn btn-primary">Сообщение</button>
             </form>
+
             <br/>
         </div>
-    </div>
-    <div>
+        <div id="cntnt">
+            {% if session.get("id") == user.id %}
+            <div class="article-card">
+                <h3>Написать пост</h3>
+                <form action="" method="post" name="ArticleForm"
+                      enctype="multipart/form-data" novalidate>
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.title.label }}<br>
+                        {{ form.title }}<br>
+                        {% for error in form.title.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.content.label }}<br>
+                        {{ form.content }}<br>
+                        {% for error in form.content.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.file.label }}<br>
+                        {{ form.file }}<br>
+                        {% for error in form.file.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor %}
+                    </p>
+                    <p>{{ form.submit() }}</p>
+                </form>
+            </div>
+            {% endif %}
 
+            {% for article in articles %}
+            <div class="article-card"><img class="img-thumbnail"
+                                           src="{{ user.avatar_path }}"
+                                           style="width: 100px;"
+                                           alt="Аватар пользователя">
+                <h2>{{ user.name.title() }} {{ user.surname.title() }}</h2>
+                <p>ID: {{ user.id }}</p>
+                <h3>{{ article.title }}</h3>
+                <h6>{{ article.timestamp }}</h6>
+                <p>{{ article.content }}</p>
+                {% for file in article.files %}
+                <a href="/get_file/{{ file.id }}">{{ file.name }}</a>
+                {% endfor %}
+                <br/>
+                {% if article.user_id == session.get("id") or
+                session.get("is_admin") %}
+                <br/>
+                <a href="/delete_article/{{ article.id }}">Удалить</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

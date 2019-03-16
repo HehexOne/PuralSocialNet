@@ -2,50 +2,58 @@
 
 {% block content %}
 <style>
-    #friends_block {
-        align-content: center;
-        text-align: center;
-        left: 0;
-        right: 0;
-        width: 700px;
-        position: absolute;
-        margin: 100px auto 100px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
-        padding: 50px;
-    }
 
     #back {
         height: 300px;
         width: 100%;
         background-color: #518bff;
-        position: relative;
+        position: absolute;
         top: 0;
         left: 0;
     }
 
+    .article-card {
+    align-content: center;
+    text-align: center;
+    left: 0;
+    right: 0;
+    width: 700px;
+    position: relative;
+    margin: 40px auto 40px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    padding: 50px;
+}
+
 </style>
 <div id="back">
-<div id="friends_block">
-    <h3>{{ message }}</h3>
-    <h3>{{ who }}</h3>
-    <br/>
-    <form action="" method="post" name="SearchForm" novalidate>
-        <input aria-label="Поиск" type="text" name="query">
-        <button class="btn btn-primary">Поиск</button>
-    </form>
-    <br/><br/>
-    {% for friend in friends %}
-    <div>
-        <a href="{{url_for('user_page', identificator=friend.id)}}">
-            <img style="width: 100px" class="img-thumbnail" id="avatar"
-                 src="{{ friend.avatar_path }}">
-            <h3>{{ friend.name }} {{ friend.surname }}</h3>
-        </a>
-    </div>
-    <br/><br/>
-    {% endfor %}
+<div class="article-card">
+    <h3>Лента последних постов</h3>
+    <h5>ID Пользователя: {{ session.get("id") }}</h5>
 </div>
+    {% for article in articles %}
+    {% for art in article[0] %}
+        <div class="article-card"><img class="img-thumbnail"
+                                           src="{{ article[1].avatar_path }}"
+                                           style="width: 100px;"
+                                           alt="Аватар пользователя">
+                <h2>{{ article[1].name.title() }} {{ article[1].surname.title() }}</h2>
+                <p>ID: {{ art.user_id }}</p>
+                <h3>{{ art.title }}</h3>
+                <h6>{{ art.timestamp }}</h6>
+                <p>{{ art.content }}</p>
+                {% for file in art.files %}
+                <a href="/get_file/{{ file.id }}">{{ file.name }}</a>
+                {% endfor %}
+                <br/>
+                {% if article[0].user_id == session.get("id") or
+                session.get("is_admin") %}
+                <br/>
+                <a href="/delete_article/{{ art.id }}">Удалить</a>
+                {% endif %}
+            </div>
+    {% endfor %}
+    {% endfor %}
 </div>
 {% endblock %}

@@ -27,25 +27,76 @@
 
 </style>
 <div id="back">
-<div id="friends_block">
-    <h3>{{ message }}</h3>
-    <h3>{{ who }}</h3>
-    <br/>
-    <form action="" method="post" name="SearchForm" novalidate>
-        <input aria-label="Поиск" type="text" name="query">
-        <button class="btn btn-primary">Поиск</button>
-    </form>
-    <br/><br/>
-    {% for friend in friends %}
-    <div>
-        <a href="{{url_for('user_page', identificator=friend.id)}}">
-            <img style="width: 100px" class="img-thumbnail" id="avatar"
-                 src="{{ friend.avatar_path }}">
-            <h3>{{ friend.name }} {{ friend.surname }}</h3>
-        </a>
+    <div id="friends_block">
+        <h3>Настройки пользователя</h3>
+        <h3>{{ who }}</h3>
+        <br/>
+        <h6>Имя пользователя: {{ username }}</h6>
+        <h6>Ваш API ключ: {{ api_key }}</h6>
+        <h6>Сменить аватар на сайте: <a href="https://gravatar.com">Gravatar</a>
+        </h6>
+        <br/>
+        <form action="" method="post" name="SettingsForm" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.name.label }}<br>
+                {{ form.name }}<br>
+                {% for error in form.name.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+            </p>
+            <p>
+                {{ form.surname.label }}<br>
+                {{ form.surname }}<br>
+                {% for error in form.surname.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+            </p>
+            <p>
+                {{ form.email.label }}<br>
+                {{ form.email }}<br>
+                {% for error in form.email.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+            </p>
+            <p>
+                {{ form.about_me.label }}<br>
+                {{ form.about_me }}<br>
+                {% for error in form.about_me.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password }}<br>
+                {% for error in form.password.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+            </p>
+            <p>
+                {{ form.date.label }}<br>
+                {{ form.date }}<br>
+                {% for error in form.date.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+            </p>
+            <br/>
+            <br/>
+            <p>{{ form.submit() }}</p>
+        </form>
+        <br/><br/>
     </div>
-    <br/><br/>
-    {% endfor %}
-</div>
 </div>
 {% endblock %}

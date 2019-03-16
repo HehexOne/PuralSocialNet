@@ -4,7 +4,7 @@
 <style>
     #friends_block {
         align-content: center;
-        text-align: center;
+        text-align: left;
         left: 0;
         right: 0;
         width: 700px;
@@ -25,27 +25,58 @@
         left: 0;
     }
 
+    #content {
+        width: 600px;
+    }
+
 </style>
 <div id="back">
-<div id="friends_block">
-    <h3>{{ message }}</h3>
-    <h3>{{ who }}</h3>
-    <br/>
-    <form action="" method="post" name="SearchForm" novalidate>
-        <input aria-label="Поиск" type="text" name="query">
-        <button class="btn btn-primary">Поиск</button>
-    </form>
-    <br/><br/>
-    {% for friend in friends %}
-    <div>
-        <a href="{{url_for('user_page', identificator=friend.id)}}">
-            <img style="width: 100px" class="img-thumbnail" id="avatar"
-                 src="{{ friend.avatar_path }}">
-            <h3>{{ friend.name }} {{ friend.surname }}</h3>
-        </a>
+    <div id="friends_block">
+        <h3>Чат с пользователем</h3>
+        <h3>{{ users[ident].name.title() }} {{ users[ident].surname.title() }} id{{ ident }}</h3>
+        <br/>
+        <div id="chat" style="overflow: auto; height: 300px; width: 600px; border: 3px solid lightskyblue;">
+            {% for message in messages %}
+            <div class="message" style="width: 95%; position: relative;left: 15px;">
+                <img class="img-thumbnail" style="height: 50px"
+                     src="{{ users[message.from_user_id].avatar_path }}">
+                <h5>{{ users[message.from_user_id].name.title() }} {{
+                    users[message.from_user_id].surname.title() }}</h5>
+                <p>{{ message.text }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <p>Написать сообщение</p>
+        <form action="" method="post" name="SendMessageForm" novalidate>
+            <textarea id="content" name="message_text" required=""></textarea>
+            <br/>
+            <button class="btn btn-success">
+                Отправить
+            </button>
+        </form>
+        <br/>
+        <button onclick="location.replace('/chat/id{{ ident }}')" id="reload" class="btn btn-primary">
+                Обновить
+            </button>
+        <br/><br/>
     </div>
-    <br/><br/>
-    {% endfor %}
 </div>
-</div>
+<script>
+    function updateScroll() {
+        let element = document.getElementById("chat");
+        element.scrollTop = element.scrollHeight;
+    }
+
+    timer = setInterval(function () {
+        let text_area =document.getElementById("content");
+        let element = document.getElementById("chat");
+        if (text_area.value === "" && element.scrollHeight - element.scrollTop === element.clientHeight){
+            document.getElementById("reload").click();
+        }
+    }, 5000);
+
+    window.onload = function () {
+        updateScroll();
+    }
+</script>
 {% endblock %}

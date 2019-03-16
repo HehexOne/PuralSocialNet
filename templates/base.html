@@ -24,7 +24,8 @@
         <a href="/login"><img src="{{ url_for('static', filename='img/login.png') }}" style="width: 50px; position: fixed; bottom: 30px; left: 25px"></a>
     {% else %}
         <a href="/user/id{{ session.get('id') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" style="width: 50px; position: fixed; left: 25px; top: 125px;"></a>
-        <a href="/user/id{{ session.get('id') }}/friends"><img src="{{ url_for('static', filename='img/friends.png') }}" style="width: 50px; position: fixed; left: 25px; top: 210px;"></a>
+        <a href="/user/id{{ session.get('id') }}/subscribes"><img src="{{ url_for('static', filename='img/friends.png') }}" style="width: 50px; position: fixed; left: 25px; top: 210px;"></a>
+        <a href="/users"><img src="{{ url_for('static', filename='img/loupe.png') }}" style="width: 40px; position: fixed; left: 28px; top: 300px;"></a>
         <a href="/logout"><img src="{{ url_for('static', filename='img/exit.png') }}" style="width: 50px; position: fixed; bottom: 30px; left: 25px"></a>
     {% endif %}
 </div>
